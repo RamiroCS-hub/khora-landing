@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 
-const DEMO_URL = "https://www.loom.com/share/a0b2d34913e64f919c20dc90c0d60933";
+const BOOK_URL = "https://book.khora.ar";
 
 const navLinks = [
   { href: "#soluciones", label: "Soluciones" },
@@ -52,7 +52,7 @@ export function Header() {
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center">
             <Button asChild className="bg-orange-500 hover:bg-orange-600 text-white">
-              <a href={DEMO_URL} target="_blank" rel="noreferrer">
+              <a href={BOOK_URL} target="_blank" rel="noreferrer">
                 Solicitar demo
               </a>
             </Button>
@@ -84,7 +84,7 @@ export function Header() {
               ))}
               <div className="flex flex-col pt-4">
                 <Button asChild className="w-full bg-orange-500 hover:bg-orange-600 text-white">
-                  <a href={DEMO_URL} target="_blank" rel="noreferrer">
+                  <a href={BOOK_URL} target="_blank" rel="noreferrer">
                     Solicitar demo
                   </a>
                 </Button>
