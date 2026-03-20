@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, MessageCircle } from "lucide-react";
 
+const DEMO_URL = "https://www.loom.com/share/a0b2d34913e64f919c20dc90c0d60933";
+
 export function CTA() {
   return (
     <section className="py-24 relative overflow-hidden">
@@ -39,10 +41,13 @@ export function CTA() {
             <Button 
               size="lg" 
               variant="outline"
+              asChild
               className="border-white/30 text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm text-lg px-8"
             >
-              <MessageCircle className="mr-2 h-5 w-5" />
-              Agenda una demo
+              <a href={DEMO_URL} target="_blank" rel="noreferrer">
+                <MessageCircle className="mr-2 h-5 w-5" />
+                Agenda una demo
+              </a>
             </Button>
           </div>
 

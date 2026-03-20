@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 
+const DEMO_URL = "https://www.loom.com/share/a0b2d34913e64f919c20dc90c0d60933";
+
 const navLinks = [
   { href: "#soluciones", label: "Soluciones" },
   { href: "#caracteristicas", label: "Características" },
@@ -52,8 +54,10 @@ export function Header() {
             <Button variant="ghost" className="text-slate-600 hover:text-slate-800">
               Iniciar sesión
             </Button>
-            <Button className="bg-orange-500 hover:bg-orange-600 text-white">
-              Solicitar demo
+            <Button asChild className="bg-orange-500 hover:bg-orange-600 text-white">
+              <a href={DEMO_URL} target="_blank" rel="noreferrer">
+                Solicitar demo
+              </a>
             </Button>
           </div>
 
@@ -85,8 +89,10 @@ export function Header() {
                 <Button variant="ghost" className="w-full justify-center text-slate-600">
                   Iniciar sesión
                 </Button>
-                <Button className="w-full bg-orange-500 hover:bg-orange-600 text-white">
-                  Solicitar demo
+                <Button asChild className="w-full bg-orange-500 hover:bg-orange-600 text-white">
+                  <a href={DEMO_URL} target="_blank" rel="noreferrer">
+                    Solicitar demo
+                  </a>
                 </Button>
               </div>
             </nav>

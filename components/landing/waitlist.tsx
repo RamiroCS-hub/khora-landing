@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { track } from "@vercel/analytics";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle, Loader2 } from "lucide-react";
 
@@ -16,22 +17,62 @@ export function Waitlist() {
     e.preventDefault();
     setError("");
 
-    if (!email || !name) {
+    const payload = {
+      email: email.trim(),
+      name: name.trim(),
+      company: company.trim(),
+    };
+
+    if (!payload.email || !payload.name) {
       setError("Por favor completá tu nombre y email.");
+      track("waitlist_submit_validation_error", {
+        missingEmail: !payload.email,
+        missingName: !payload.name,
+      });
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
+    if (!emailRegex.test(payload.email)) {
       setError("Por favor ingresá un email valido.");
+      track("waitlist_submit_validation_error", {
+        invalidEmail: true,
+      });
       return;
     }
 
     setLoading(true);
-    // Simulate async submission
-    await new Promise((r) => setTimeout(r, 1200));
-    setLoading(false);
-    setSubmitted(true);
+    try {
+      const response = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => null);
+        throw new Error(data?.error || "No pudimos enviar tu solicitud.");
+      }
+
+      track("waitlist_submit_success", {
+        hasCompany: Boolean(payload.company),
+      });
+      setSubmitted(true);
+    } catch (err) {
+      const message =
+        err instanceof Error
+          ? err.message
+          : "No pudimos enviar tu solicitud. Intenta de nuevo.";
+
+      track("waitlist_submit_error", {
+        message,
+      });
+      setError(message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -79,6 +120,8 @@ export function Waitlist() {
                       placeholder="Juan Perez"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
+                      autoComplete="name"
+                      required
                       className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
                     />
                   </div>
@@ -94,6 +137,8 @@ export function Waitlist() {
                       placeholder="juan@empresa.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
+                      autoComplete="email"
+                      required
                       className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
                     />
                   </div>
@@ -109,6 +154,7 @@ export function Waitlist() {
                       placeholder="Nombre de tu empresa"
                       value={company}
                       onChange={(e) => setCompany(e.target.value)}
+                      autoComplete="organization"
                       className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
                     />
                   </div>

@@ -4,6 +4,8 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
 
+const DEMO_URL = "https://www.loom.com/share/a0b2d34913e64f919c20dc90c0d60933";
+
 export function Hero() {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
@@ -54,10 +56,13 @@ export function Hero() {
               <Button 
                 variant="outline" 
                 size="lg"
+                asChild
                 className="border-slate-300 text-slate-700 hover:bg-white hover:border-cyan-300 hover:text-cyan-600"
               >
-                <Play className="mr-2 h-5 w-5" />
-                Ver demo
+                <a href={DEMO_URL} target="_blank" rel="noreferrer">
+                  <Play className="mr-2 h-5 w-5" />
+                  Ver demo
+                </a>
               </Button>
             </div>
 
