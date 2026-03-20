@@ -1,0 +1,87 @@
+{
+  "feature": "001-waitlist-email-notification",
+  "generated_at": "2026-03-20",
+  "spec_refs": [
+    "1-functional/spec.md",
+    "2-technical/spec.md"
+  ],
+  "tasks": [
+    {
+      "id": "1",
+      "title": "Configure FormSubmit endpoint",
+      "description": "Definir el endpoint AJAX de FormSubmit para la landing, idealmente usando el identificador ofuscado después de la activación inicial. Documentar el paso manual de activación y cualquier campo reservado necesario.",
+      "files": [
+        "components/landing/waitlist.tsx",
+        ".env.example"
+      ],
+      "acceptance_criteria": [
+        "La implementación conoce el endpoint AJAX de FormSubmit a utilizar",
+        "Queda documentado el paso de activación inicial del formulario",
+        "La configuración deja explícito que el destinatario operativo es `ramiro.souble@khora.ar`"
+      ],
+      "spec_refs": [
+        "#REQ-01",
+        "#REQ-03",
+        "#ADR-001"
+      ],
+      "depends_on": [],
+      "status": "pending",
+      "tdd": false
+    },
+    {
+      "id": "2",
+      "title": "Wire waitlist form to FormSubmit",
+      "description": "Modificar `components/landing/waitlist.tsx` para enviar el payload validado al endpoint AJAX de FormSubmit, incluyendo `_subject`, `_template` y `_replyto`, y manejar errores sin redirección.",
+      "files": [
+        "components/landing/waitlist.tsx"
+      ],
+      "acceptance_criteria": [
+        "Un submit válido produce éxito visible cuando FormSubmit responde correctamente",
+        "Si el endpoint de FormSubmit falla o no está activado, la UI muestra error y no devuelve éxito",
+        "El payload enviado incluye nombre, email, empresa y metadatos reservados para email"
+      ],
+      "spec_refs": [
+        "#REQ-01",
+        "#REQ-03",
+        "#ADR-001",
+        "#ADR-002",
+        "#ADR-003"
+      ],
+      "depends_on": [
+        "1"
+      ],
+      "status": "pending",
+      "tdd": false
+    },
+    {
+      "id": "3",
+      "title": "Run manual waitlist smoke check",
+      "description": "Verificar manualmente que el formulario siga mostrando validaciones, que el submit llegue a FormSubmit y que el primer envío de activación/confirmación quede documentado. Registrar en implementación/verificación el resultado y cualquier requisito operativo pendiente.",
+      "files": [
+        "sdd/wip/001-waitlist-email-notification/4-implementation/progress.md",
+        "sdd/wip/001-waitlist-email-notification/5-verify/report.md"
+      ],
+      "acceptance_criteria": [
+        "Existe una prueba manual documentada del flujo válido",
+        "Existe una prueba manual documentada de al menos un caso de error operativo",
+        "Queda documentado el estado de activación del formulario de FormSubmit"
+      ],
+      "spec_refs": [
+        "#REQ-01",
+        "#REQ-02",
+        "#REQ-03"
+      ],
+      "depends_on": [
+        "2"
+      ],
+      "status": "pending",
+      "tdd": false
+    }
+  ],
+  "summary": {
+    "total": 3,
+    "completed": 0,
+    "pending": 3,
+    "tdd_tasks": 0
+  }
+}

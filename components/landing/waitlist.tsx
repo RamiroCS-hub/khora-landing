@@ -5,6 +5,9 @@ import { track } from "@vercel/analytics";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle, Loader2 } from "lucide-react";
 
+const FORMSUBMIT_ENDPOINT =
+  process.env.NEXT_PUBLIC_FORMSUBMIT_ENDPOINT || "ramiro.souble@khora.ar";
+
 export function Waitlist() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -43,21 +46,43 @@ export function Waitlist() {
 
     setLoading(true);
     try {
-      const response = await fetch("/api/waitlist", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
+      const formData = new FormData();
+      formData.append("name", payload.name);
+      formData.append("email", payload.email);
+      formData.append("company", payload.company);
+      formData.append("_subject", "Nuevo lead desde khora-landing");
+      formData.append("_template", "table");
+      formData.append("_replyto", payload.email);
 
-      if (!response.ok) {
-        const data = await response.json().catch(() => null);
-        throw new Error(data?.error || "No pudimos enviar tu solicitud.");
+      if (typeof window !== "undefined") {
+        formData.append("_url", window.location.href);
+      }
+
+      const response = await fetch(
+        `https://formsubmit.co/ajax/${FORMSUBMIT_ENDPOINT}`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+          },
+          body: formData,
+        }
+      );
+
+      const data = await response.json().catch(() => null);
+      const isSuccess = data?.success === true || data?.success === "true";
+
+      if (!response.ok || !isSuccess) {
+        throw new Error(
+          data?.message ||
+            data?.error ||
+            "No pudimos enviar tu solicitud. Activa el formulario en FormSubmit e intenta de nuevo."
+        );
       }
 
       track("waitlist_submit_success", {
         hasCompany: Boolean(payload.company),
+        provider: "formsubmit",
       });
       setSubmitted(true);
     } catch (err) {
@@ -68,6 +93,7 @@ export function Waitlist() {
 
       track("waitlist_submit_error", {
         message,
+        provider: "formsubmit",
       });
       setError(message);
     } finally {
@@ -117,6 +143,7 @@ export function Waitlist() {
                     <input
                       id="waitlist-name"
                       type="text"
+                      name="name"
                       placeholder="Juan Perez"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
@@ -134,6 +161,7 @@ export function Waitlist() {
                     <input
                       id="waitlist-email"
                       type="email"
+                      name="email"
                       placeholder="juan@empresa.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
@@ -151,6 +179,7 @@ export function Waitlist() {
                     <input
                       id="waitlist-company"
                       type="text"
+                      name="company"
                       placeholder="Nombre de tu empresa"
                       value={company}
                       onChange={(e) => setCompany(e.target.value)}
@@ -184,6 +213,9 @@ export function Waitlist() {
 
                 <p className="text-xs text-slate-400 text-center mt-4">
                   Sin compromisos. Implementacion en dias. Tu informacion no se comparte con terceros.
+                </p>
+                <p className="text-xs text-slate-400 text-center mt-2">
+                  El primer envio requiere activar el formulario desde el email de confirmacion de FormSubmit.
                 </p>
               </form>
             )}
