@@ -50,10 +50,7 @@ export function Header() {
           </nav>
 
           {/* Desktop CTA */}
-          <div className="hidden md:flex items-center gap-4">
-            <Button variant="ghost" className="text-slate-600 hover:text-slate-800">
-              Iniciar sesión
-            </Button>
+          <div className="hidden md:flex items-center">
             <Button asChild className="bg-orange-500 hover:bg-orange-600 text-white">
               <a href={DEMO_URL} target="_blank" rel="noreferrer">
                 Solicitar demo
@@ -85,10 +82,7 @@ export function Header() {
                   {link.label}
                 </Link>
               ))}
-              <div className="flex flex-col gap-2 pt-4">
-                <Button variant="ghost" className="w-full justify-center text-slate-600">
-                  Iniciar sesión
-                </Button>
+              <div className="flex flex-col pt-4">
                 <Button asChild className="w-full bg-orange-500 hover:bg-orange-600 text-white">
                   <a href={DEMO_URL} target="_blank" rel="noreferrer">
                     Solicitar demo
