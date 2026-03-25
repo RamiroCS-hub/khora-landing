@@ -5,7 +5,7 @@ import { ArrowRight, Play } from "lucide-react";
 
 const DEMO_VIDEO_ID = "9QT3f2EidXI";
 const DEMO_URL = `https://www.youtube.com/watch?v=${DEMO_VIDEO_ID}`;
-const DEMO_EMBED_URL = `https://www.youtube.com/embed/${DEMO_VIDEO_ID}?autoplay=1&mute=1&controls=0&loop=1&playlist=${DEMO_VIDEO_ID}&start=10&end=25&playsinline=1&rel=0&modestbranding=1`;
+const HERO_LOOP_VIDEO_URL = "/videos/hero-demo-loop.mp4";
 
 export function Hero() {
   return (
@@ -100,13 +100,15 @@ export function Hero() {
           <div className="relative lg:pl-8">
             <div className="relative overflow-hidden rounded-2xl bg-slate-950 shadow-2xl shadow-slate-900/10">
               <div className="aspect-[7/5]">
-                <iframe
-                  src={DEMO_EMBED_URL}
-                  title="Khora demo video"
-                  className="h-full w-full"
-                  allow="autoplay; encrypted-media; picture-in-picture"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allowFullScreen
+                <video
+                  src={HERO_LOOP_VIDEO_URL}
+                  className="h-full w-full object-cover"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                  aria-label="Khora demo preview"
                 />
               </div>
               {/* Floating card */}
