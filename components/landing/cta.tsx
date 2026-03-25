@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, MessageCircle } from "lucide-react";
 
-const DEMO_URL = "https://www.loom.com/share/a0b2d34913e64f919c20dc90c0d60933";
+const DEMO_URL = "https://www.youtube.com/watch?v=9QT3f2EidXI";
 
 export function CTA() {
   return (
