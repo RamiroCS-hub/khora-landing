@@ -1,10 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
 
-const DEMO_URL = "https://www.youtube.com/watch?v=9QT3f2EidXI";
+const DEMO_VIDEO_ID = "9QT3f2EidXI";
+const DEMO_URL = `https://www.youtube.com/watch?v=${DEMO_VIDEO_ID}`;
+const DEMO_EMBED_URL = `https://www.youtube.com/embed/${DEMO_VIDEO_ID}?autoplay=1&mute=1&controls=0&loop=1&playlist=${DEMO_VIDEO_ID}&start=10&end=25&playsinline=1&rel=0&modestbranding=1`;
 
 export function Hero() {
   return (
@@ -95,17 +96,19 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Hero Image */}
+          {/* Hero media */}
           <div className="relative lg:pl-8">
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-slate-900/10">
-              <Image
-                src="/images/dashboard-preview.jpg"
-                alt="Khora Dashboard - Inteligencia Organizacional"
-                width={700}
-                height={500}
-                className="w-full h-auto object-cover"
-                priority
-              />
+            <div className="relative overflow-hidden rounded-2xl bg-slate-950 shadow-2xl shadow-slate-900/10">
+              <div className="aspect-[7/5]">
+                <iframe
+                  src={DEMO_EMBED_URL}
+                  title="Khora demo video"
+                  className="h-full w-full"
+                  allow="autoplay; encrypted-media; picture-in-picture"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                />
+              </div>
               {/* Floating card */}
               <div className="absolute -bottom-6 -left-6 bg-white rounded-xl shadow-xl p-4 max-w-[220px]">
                 <div className="flex items-center gap-3">
