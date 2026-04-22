@@ -18,12 +18,12 @@ const footerLinks = {
   recursos: [
     { label: "Documentacion", href: "#" },
     { label: "Guias", href: "#" },
-    { label: "Centro de ayuda", href: "#" },
+    { label: "Centro de ayuda", href: "/support" },
     { label: "API", href: "#" },
   ],
   legal: [
-    { label: "Privacidad", href: "#" },
-    { label: "Terminos", href: "#" },
+    { label: "Privacidad", href: "/privacy" },
+    { label: "Terminos", href: "/terms" },
     { label: "Seguridad", href: "#" },
   ],
 };
